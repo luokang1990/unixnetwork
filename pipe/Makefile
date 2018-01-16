@@ -2,13 +2,16 @@
 CC=g++
 CFLAGS=-g -O2 -D_GNU_SOURCE -D__USE_GNU -D_REENTRANT -Wall
 
-PROGS=mainpipe mainpopen
+PROGS=mainpipe mainpopen mainfifo
 CLEANFILES=*.o
 all:  ${PROGS}
 
 mainpipe:  mainpipe.o client.o server.o
 	$(CC)  ${CFLAGS} -o $@ mainpipe.o client.o server.o
-mainpopen: mainpopen.o
+mainpopen: mainpopen.o 
 	$(CC)  ${CFLAGS} -o $@ mainpopen.o
+mainfifo: mainfifo.o client.o server.o
+	$(CC)  ${CFLAGS} -o $@ mainpipe.o client.o server.o
+	
 clean:
 	rm -f $(PROGS) $(CLEANFILES)
