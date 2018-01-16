@@ -16,7 +16,7 @@ int main(int argc,char **argv)
 	printf("n=%zu\n",n);
 	printf("buff=%s\n",buff);
 	snprintf(command,sizeof(command),"cat %s",buff);
-	fp=popen(command,"r");    //¶Á½øcommandµÄ±ê×¼Êä³ö
+	fp=popen(command,"r");    //è¯»è¿›commandçš„æ ‡å‡†è¾“å‡º
 	
 	while(fgets(buff,MAXLINE,fp) !=NULL)//copy from pipe to standard output
 	  fputs(buff,stdout);
