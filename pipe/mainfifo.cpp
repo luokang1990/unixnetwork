@@ -8,8 +8,8 @@
 #include <sys/wait.h>     //waitpid  
 #include <errno.h>        //errno
 
-#define FIFO1 "/tmp/fifo.1"
-#define FIFO2 "/tmp/fifo.2"  
+#define FIFO1 "/tmp/fifo1"
+#define FIFO2 "/tmp/fifo2"  
  
 void client(int, int),server(int, int);
 
