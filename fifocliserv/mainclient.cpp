@@ -12,18 +12,22 @@ main(int argc, char **argv)
 		/* 4create FIFO with our PID as part of name */
 	pid = getpid();
 	snprintf(fifoname, sizeof(fifoname), "/tmp/fifo.%ld", (long) pid);
+	printf("fifoname: %s\n", fifoname);
 	if ((mkfifo(fifoname, 0644) < 0) && (errno != EEXIST))
 		printf("can't create %s", fifoname);
 
 		/* 4start buffer with pid and a blank */
-	snprintf(buff, sizeof(buff), "%ld ", (long) pid);
+	snprintf(buff, sizeof(buff), "%ld ", (long) pid); //这里有个空格
+	printf("pid in buff: %s\n", buff);
 	len = strlen(buff);
+	printf("len of buff: %zu\n", len);
 	ptr = buff + len;
 
 		/* 4read pathname */
-	fgets(ptr, MAXLINE - len, stdin);
+	fgets(ptr, MAXLINE - len, stdin);     //buff=pid+空格+路径名+'\n'
 	len = strlen(buff);		/* fgets() guarantees null byte at end */
-
+	printf("pid in buff: %s\n", buff);
+  printf("len of buff after add pathname: %zu\n", len);
 		/* 4open FIFO to server and write PID and pathname to FIFO */
 	writefifo = open(SERV_FIFO, O_WRONLY, 0);
 	write(writefifo, buff, len);

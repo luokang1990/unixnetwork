@@ -19,16 +19,21 @@ int main(int argc,char **argv)
 	{
 		if (buff[n-1]=='\n');
 		  n--;                   //
-		buff[n]='\0';              //null terminate pathname
+		buff[n]='\0';             //null terminate pathname
+		
+		printf("buff: %s\n",buff);
 		
 		if((ptr=strchr(buff,' '))==NULL)
 			{
 				printf("bogus request: %s\n",buff);
 				continue;
 			} 
-		*ptr++=0;            //
+		*ptr++=0;            /* null terminate PID, ptr = pathname */
 		
 		pid=atol(buff);
+		printf("buff: %ld\n",(long)pid);
+		printf("ptr: %s\n",ptr);
+		
 		snprintf(fifoname,sizeof(fifoname),"/tmp/fifo.%ld",(long)pid);
 		
 		if((writefifo=open(fifoname,O_WRONLY,0))<0)
@@ -36,7 +41,7 @@ int main(int argc,char **argv)
 				printf("can't open: %s\n",fifoname);
 				continue;
 			}
-		if ((fd=open(ptr,O_RDONLY))<0)
+		if ((fd=open(ptr,O_RDONLY))<0)  
 			{
 				snprintf(buff+n,sizeof(buff)-n,": can't open, %s\n",strerror(errno));
 				n=strlen(ptr);
